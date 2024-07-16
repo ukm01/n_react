@@ -25,7 +25,7 @@ border:1px solid black;
     margin: 5px;
     
     padding: 5px;
-    width: 200px;
+    width: 400px;
     
  
 
@@ -56,9 +56,10 @@ border:1px solid black;
 }
 .shimmer-card{
     margin:5px;
-    width:200px;
+    padding: 5px;
+    width:400px;
     height: 400px;
-    background-color: gray;
+    background-color:#f0f0f0;
 }
 .islogin-btn{
     padding: 0px 20px;
@@ -72,4 +73,10 @@ border:1px solid black;
 }
 .filter-btn{
     cursor: pointer;
+}
+
+.user-card{
+    padding: 10px;
+    border: 1px solid black;
+
 }

@@ -7,12 +7,14 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import ContactUs from './components/ContactUs';
 import ErrorMsg from './components/ErrorPage.jsx';
 import Body from './components/Body.jsx';
+import RestaurantMenu from './components/RestaurantMenu.jsx';
 
 const appRouter=createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children:[{
+    children:[
+      {
       path:"/",
       element:<Body />
     },
@@ -23,6 +25,10 @@ const appRouter=createBrowserRouter([
     {
       path:"/contact",
       element: <ContactUs />
+    },
+    {
+      path:"/restaurants/:resid",
+      element: <RestaurantMenu />
     }
 
     ],
