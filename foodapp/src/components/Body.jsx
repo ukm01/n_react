@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 
 
@@ -30,17 +31,21 @@ const Body = () => {
         
         
     };
+
+    const OnlineStatus = useOnlineStatus();
+
+    if(OnlineStatus==false) return(<h1> You are offline,Pls check your internet onnection!</h1>)
     
     
     return restaurants.length === 0 ?(<Shimmer />):(
       <div className='body'>
         <div className="filter">
           <div className="search">
-            <input type="text" className="search-box" value={searchValue} onChange={(e)=>{
+            <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={searchValue} onChange={(e)=>{
               setSearchValue(e.target.value);
 
             }} ></input>
-            <button  onClick={()=>{
+            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={()=>{
               let newsearchlist=restaurants.filter((res)=>{
                 return(res.info.name.toLowerCase().includes(searchValue.toLowerCase())         )//includes(searchValue)
               })
@@ -48,7 +53,7 @@ const Body = () => {
               setFilteredRestaurants(newsearchlist)
             }}>search</button>
           </div>
-            <button className="filter-btn" 
+            <button className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" 
             onClick={()=>{
                 let newlist=restaurants.filter(restaurant=>restaurant.info.avgRating > 4.1)
                 setFilteredRestaurants(newlist);
@@ -60,7 +65,7 @@ const Body = () => {
             </button>
         </div>
         
-        <div className="search">Search</div>
+        
         <div className='res-container'>
   
           { filteredRestaurants.length===0?(<h1>No Results found</h1>):
