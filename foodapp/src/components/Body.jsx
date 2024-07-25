@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withPromotedLabel}from "./RestaurantCard";
 import Shimmer from "./shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -19,6 +19,8 @@ const Body = () => {
     useEffect(() =>{
         fetchData();
     },[])
+
+    const PromotedRestaurants = withPromotedLabel(RestaurantCard)
     
     const fetchData = async() =>{
         const data= await fetch(
@@ -30,11 +32,13 @@ const Body = () => {
         setFilteredRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
         
         
+        
     };
+    
 
     const OnlineStatus = useOnlineStatus();
 
-    if(OnlineStatus==false) return(<h1> You are offline,Pls check your internet onnection!</h1>)
+    if(OnlineStatus=== false) return(<h1> You are offline,Pls check your internet onnection!</h1>)
     
     
     return restaurants.length === 0 ?(<Shimmer />):(
@@ -45,11 +49,11 @@ const Body = () => {
               setSearchValue(e.target.value);
 
             }} ></input>
-            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={()=>{
+            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mx-4" onClick={()=>{
               let newsearchlist=restaurants.filter((res)=>{
                 return(res.info.name.toLowerCase().includes(searchValue.toLowerCase())         )//includes(searchValue)
               })
-              console.log()
+              
               setFilteredRestaurants(newsearchlist)
             }}>search</button>
           </div>
@@ -66,12 +70,13 @@ const Body = () => {
         </div>
         
         
-        <div className='res-container'>
+        <div className='flex flex-wrap'>
   
           { filteredRestaurants.length===0?(<h1>No Results found</h1>):
             filteredRestaurants.map((restaurant)=>{
+              
               return(
-                <Link key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id} ><RestaurantCard resData={restaurant} /></Link>
+                <Link key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id} >{restaurant.info.avgRating < 4.2 ? (<PromotedRestaurants resData={restaurant} />):(<RestaurantCard resData={restaurant} />) }</Link>
                 
   
               )
