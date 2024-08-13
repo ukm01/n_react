@@ -1,13 +1,24 @@
 import { useState } from "react";
 import ItemList from "./ItemList";
 
-const RestaurantCategory =({data}) =>{
+const RestaurantCategory =({data,visible,setShowIndex}) =>{
+    
 
-    const [visible,setVisible]=useState(true);
+     const [visibleNew,setVisibleNew]=useState(visible);
     const setvisiblevalue =() =>{
-        visible===false?setVisible(true):setVisible(false);
+       
+       setShowIndex();
+
+      //  setVisibleNew(!visibleNew);
+
+
+
+       
+        
 
     }
+
+
     
 
 
@@ -15,7 +26,7 @@ const RestaurantCategory =({data}) =>{
        <div  >
         <div className="w-6/12 mx-auto my-4 bg-gray-100 shadow-lg p-4 flex justify-between ">
         <span className="font-bold text-lg">{data.title} ({data.itemCards.length})</span>
-        <span onClick={()=>{setvisiblevalue()}} style={{cursor:"pointer"}}>{visible? "⬆":"⬇"}</span>
+        <span onClick={setvisiblevalue} style={{cursor:"pointer"}}>{visible? "⬆":"⬇"}</span>
         
         </div>
         <div style={{display: visible ? 'block' : 'none'}}>

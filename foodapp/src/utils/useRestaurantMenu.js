@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 const useRestaurantMenu = (resid) => {
 
     const[resInfo,setResInfo]=useState(null)
+    
     useEffect(() =>{
         fetchdata()
     },[])

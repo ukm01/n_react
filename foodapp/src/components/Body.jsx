@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import RestaurantCard, {withPromotedLabel}from "./RestaurantCard";
 import Shimmer from "./shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 
 
@@ -12,9 +13,13 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 
 
 const Body = () => {
+  
+
+
     let [restaurants,setRestaurants]=useState([]);
     let[searchValue,setSearchValue]=useState('');
     let[filteredRestaurants,setFilteredRestaurants]=useState([]);
+    const{loggedInUser,setUserName}=useContext(UserContext);
 
     useEffect(() =>{
         fetchData();
@@ -56,10 +61,11 @@ const Body = () => {
               
               setFilteredRestaurants(newsearchlist)
             }}>search</button>
+           
           </div>
             <button className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" 
             onClick={()=>{
-                let newlist=restaurants.filter(restaurant=>restaurant.info.avgRating > 4.1)
+                let newlist=restaurants.filter(restaurant=>restaurant.info.avgRating > 4.4)
                 setFilteredRestaurants(newlist);
                 
             }}
@@ -67,6 +73,10 @@ const Body = () => {
                 Top Rated Restaurants
 
             </button>
+            <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={loggedInUser} onChange={(e)=>{
+              setUserName(e.target.value);
+
+            }} ></input>
         </div>
         
         

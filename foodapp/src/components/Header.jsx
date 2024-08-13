@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import {LOGO_URL} from '../utils/constants';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import UserContext from '../utils/UserContext';
 
 const Header = () => {
 
   let[isLoggedin,setIsLoggedin]=useState("Logout");
   const OnlineStatus = useOnlineStatus();
+
+  const {loggedInUser} =useContext(UserContext);
+
+
 
     return(
       <header>
@@ -32,6 +37,7 @@ const Header = () => {
           <li><Link to="/contact">contact Us</Link></li>
          <li><Link to="/grocery" >Grocery</Link></li>
           <li><Link to="/" >Cart</Link></li>
+          <li>{loggedInUser}</li>
                    
                 </ul>
             </div>
